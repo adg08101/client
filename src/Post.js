@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Container } from "@mui/system";
+import Link from "@mui/material/Link";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -53,17 +54,20 @@ const ExpandMore = styled((props) => {
   ],
 }));
 
-export default function Post() {
+export default function Post({ single }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const largeOffset = single ? 3 : 0;
+
   return (
     <Grid
       sx={{ marginTop: 10 + "px" }}
       size={{ lg: 6, md: 12, sm: 12, xs: 12 }}
+      offset={{ lg: largeOffset, md: 0, sm: 0, xs: 0 }}
     >
       <Item>
         <Card>
@@ -82,9 +86,12 @@ export default function Post() {
             subheader="September 14, 2016"
           />
           <Container
-            sx={{
-              display: { lg: "flex", md: "flex", sm: "block", xs: "block" },
-            }}
+            id="container"
+            sx={() => ({
+              display: single
+                ? "block"
+                : { lg: "flex", md: "flex", sm: "block", xs: "block" },
+            })}
           >
             <CardMedia
               component="img"
@@ -93,11 +100,17 @@ export default function Post() {
               alt="Paella dish"
             />
             <CardContent>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Shrimp and Chorizo Paella
+              </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 This impressive paella is a perfect party dish and a fun meal to
                 cook together with your guests. Add 1 cup of frozen peas along
                 with the mussels, if you like.
               </Typography>
+              <Link href={single ? "/" : "/post"}>
+                {single ? "Back" : "Read more"}
+              </Link>
             </CardContent>
           </Container>
           <CardActions disableSpacing>
