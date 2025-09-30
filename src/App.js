@@ -14,13 +14,13 @@ function App() {
           <>
             <Header />
             <Grid container spacing={1} style={{ paddingTop: 50 + "px" }}>
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
+              <Post single={false} />
+              <Post single={false} />
+              <Post single={false} />
+              <Post single={false} />
+              <Post single={false} />
+              <Post single={false} />
+              <Post single={false} />
             </Grid>
           </>
         }
@@ -31,7 +31,7 @@ function App() {
           <>
             <Header />
             <Grid container spacing={1} style={{ paddingTop: 50 + "px" }}>
-              <Post />
+              <Post single={true} />
             </Grid>
           </>
         }
