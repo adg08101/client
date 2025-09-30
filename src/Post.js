@@ -29,12 +29,6 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-const Div = styled("div")(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: (theme.vars || theme).palette.background.paper,
-  padding: theme.spacing(1),
-}));
-
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -99,7 +93,6 @@ export default function Post() {
               alt="Paella dish"
             />
             <CardContent>
-              <Div>{"Shrimp and Chorizo Paella"}</Div>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 This impressive paella is a perfect party dish and a fun meal to
                 cook together with your guests. Add 1 cup of frozen peas along

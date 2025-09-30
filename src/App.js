@@ -13,13 +13,24 @@ function App() {
         element={
           <>
             <Header />
-            <Grid container spacing={1}>
+            <Grid container spacing={1} style={{ paddingTop: 50 + "px" }}>
               <Post />
               <Post />
               <Post />
               <Post />
               <Post />
               <Post />
+              <Post />
+            </Grid>
+          </>
+        }
+      />
+      <Route
+        path="post"
+        element={
+          <>
+            <Header />
+            <Grid container spacing={1} style={{ paddingTop: 50 + "px" }}>
               <Post />
             </Grid>
           </>
