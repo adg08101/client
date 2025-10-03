@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 import Post from "./Post";
-import SignIn from "./Signin";
+import AuthIn from "./Auth";
 import Layout from "./Layout";
 import Grid from "@mui/material/Grid";
 import { Routes, Route } from "react-router-dom";
@@ -36,8 +36,8 @@ function App() {
             </>
           }
         />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="signup" element={<SignIn />} />
+        <Route path="signin" element={<AuthIn signup={false} />} />
+        <Route path="signup" element={<AuthIn signup={true} />} />
       </Route>
     </Routes>
   );
