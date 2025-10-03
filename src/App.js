@@ -2,6 +2,8 @@ import React from "react";
 import "./index.css";
 import Header from "./Header";
 import Post from "./Post";
+import SignIn from "./Signin";
+import SignUp from "./Signup";
 import Grid from "@mui/material/Grid";
 import { Routes, Route } from "react-router-dom";
 
@@ -36,6 +38,8 @@ function App() {
           </>
         }
       />
+      <Route path="signin" element={<SignIn />} />
+      <Route path="signup" element={<SignUp />} />
     </Routes>
   );
 }
