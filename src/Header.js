@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Link from "@mui/material/Link";
 
 export default function Header() {
   return (
@@ -24,6 +25,9 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             MyBlog
           </Typography>
+          <Button href="/" color="inherit">
+            Home
+          </Button>
           <Button href="/signin" color="inherit">
             Sign In
           </Button>
