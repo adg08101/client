@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
+import Typography from "@mui/material/Typography";
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
 // import { getDesignTokens, inputsCustomizations } from "./customTheme";
@@ -24,6 +25,18 @@ const signIn = async (provider) => {
   });
   return promise;
 };
+
+const title = (
+  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+    Title
+  </Typography>
+);
+
+const subTitle = (
+  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+    Subtitle
+  </Typography>
+);
 
 export default function AuthIn({ signup = false }) {
   // const { mode, systemMode } = useColorSchemeShim();
@@ -57,6 +70,11 @@ export default function AuthIn({ signup = false }) {
             variant: "contained",
           },
         }}
+        slot={{
+          title: { title },
+          subtitle: { subTitle },
+        }}
+        title={title}
         sx={{
           "& form > .MuiStack-root": {
             marginTop: "2rem",
