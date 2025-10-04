@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
-import Post from "./Post";
-import AuthIn from "./Auth";
+import Post from "./pages/Post";
+import AuthIn from "./pages/Auth";
 import Layout from "./Layout";
 import Grid from "@mui/material/Grid";
 import { Routes, Route } from "react-router-dom";
