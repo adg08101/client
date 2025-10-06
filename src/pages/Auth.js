@@ -1,7 +1,9 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
 // import { getDesignTokens, inputsCustomizations } from "./customTheme";
@@ -38,6 +40,10 @@ const subTitle = (
   </Typography>
 );
 
+const emailFieldComponent = (
+  <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+);
+
 export default function AuthIn({ signup = false }) {
   // const { mode, systemMode } = useColorSchemeShim();
   // const calculatedMode = (mode === "system" ? systemMode : mode) ?? "light";
@@ -56,6 +62,23 @@ export default function AuthIn({ signup = false }) {
   }); */
   // preview-end
 
+  const defaultState = () => {
+    return {
+      email: "",
+      password: "",
+    };
+  };
+
+  const [formValues, setFormValues] = useState(defaultState());
+
+  const handleChange = (event) => {
+    const { type, name, value, checked } = event.target;
+
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const [email, setEmail] = useState("");
+
   return (
     // preview-start
 
@@ -69,12 +92,27 @@ export default function AuthIn({ signup = false }) {
             color: "primary",
             variant: "contained",
           },
+          emailField: {
+            emailFieldComponent,
+          },
+          emailField: {
+            name: "email",
+            value: formValues.email,
+            onChange: handleChange,
+          },
+          passwordField: {
+            name: "password",
+            value: formValues.password,
+            onChange: handleChange,
+          },
+          title: {
+            value: "none",
+          },
         }}
         slot={{
           title: { title },
           subtitle: { subTitle },
         }}
-        title={title}
         sx={{
           "& form > .MuiStack-root": {
             marginTop: "2rem",
