@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
+// require("dotenv").config();
 
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
@@ -51,7 +52,7 @@ export default function AuthIn({ signup = false }) {
 
   async function handleSubmit(event) {
     // event.preventDefault();
-    const url = "http://localhost:4000/register";
+    const url = `http://localhost:4000/register`;
 
     try {
       const response = await fetch(url, {
