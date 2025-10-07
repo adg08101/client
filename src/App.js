@@ -44,5 +44,3 @@ function App() {
 }
 
 export default App;
-
-// TODO: Add .env config
