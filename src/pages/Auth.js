@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
@@ -17,32 +15,6 @@ function providers(signup) {
         { id: "credentials", name: "Email and Password" },
       ];
 }
-
-const signIn = async (provider) => {
-  const promise = new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(`Sign in with ${provider.id}`);
-      resolve({ error: "This is a mock error message." });
-    }, 500);
-  });
-  return promise;
-};
-
-const title = (
-  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-    Title
-  </Typography>
-);
-
-const subTitle = (
-  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-    Subtitle
-  </Typography>
-);
-
-const emailFieldComponent = (
-  <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-);
 
 export default function AuthIn({ signup = false }) {
   // const { mode, systemMode } = useColorSchemeShim();
@@ -72,10 +44,33 @@ export default function AuthIn({ signup = false }) {
   const [formValues, setFormValues] = useState(defaultState());
 
   const handleChange = (event) => {
-    const { type, name, value, checked } = event.target;
+    const { name, value } = event.target;
 
     setFormValues({ ...formValues, [name]: value });
   };
+
+  async function handleSubmit(event) {
+    // event.preventDefault();
+    const url = "http://localhost:4000/register";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(formValues),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   const [email, setEmail] = useState("");
 
@@ -84,16 +79,13 @@ export default function AuthIn({ signup = false }) {
 
     <AppProvider>
       <SignInPage
-        signIn={signIn}
+        signIn={handleSubmit}
         providers={providers(signup)}
         slotProps={{
           form: { noValidate: true },
           submitButton: {
             color: "primary",
             variant: "contained",
-          },
-          emailField: {
-            emailFieldComponent,
           },
           emailField: {
             name: "email",
@@ -105,13 +97,6 @@ export default function AuthIn({ signup = false }) {
             value: formValues.password,
             onChange: handleChange,
           },
-          title: {
-            value: "none",
-          },
-        }}
-        slot={{
-          title: { title },
-          subtitle: { subTitle },
         }}
         sx={{
           "& form > .MuiStack-root": {
