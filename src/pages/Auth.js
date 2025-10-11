@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import axios from "axios";
+import AlertComponent from "../components/Alert";
+import { useNavigate } from "react-router-dom";
 
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
@@ -43,12 +45,29 @@ export default function AuthIn({ signup = false }) {
   };
 
   const [formValues, setFormValues] = useState(defaultState());
+  const [status, setStatus] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [display, setDisplay] = useState("none");
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormValues({ ...formValues, [name]: value });
   };
+
+  const handleRedirect = () => {
+    navigate("/signin"); // Redirects to '/new-path'
+    // navigate(-1); // Go back one step in history
+    // navigate('/another-path', { replace: true }); // Replaces the current entry in history
+  };
+
+  async function handleReset() {
+    setStatus("");
+    setStatusMessage("");
+    setDisplay("none");
+    handleRedirect();
+  }
 
   async function handleSubmit() {
     const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/register`;
@@ -61,52 +80,61 @@ export default function AuthIn({ signup = false }) {
         data: formValues,
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `User registration failed with status: ${response.status}`
-        );
-      }
+      setStatus("success");
+      setStatusMessage(response.data.message);
+      setDisplay("flex");
 
-      const result = await response.json();
-      alert(result.message);
+      setFormValues(defaultState());
+
+      setTimeout(() => {
+        handleReset();
+      }, 3000);
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
+      setStatus("error");
+      setStatusMessage(error.message);
+      setDisplay("flex");
     }
   }
 
   return (
     // preview-start
-
-    <AppProvider>
-      <SignInPage
-        signIn={handleSubmit}
-        providers={providers(signup)}
-        slotProps={{
-          form: { noValidate: true },
-          submitButton: {
-            color: "primary",
-            variant: "contained",
-          },
-          emailField: {
-            name: "username",
-            value: formValues.username,
-            onChange: handleChange,
-          },
-          passwordField: {
-            name: "password",
-            value: formValues.password,
-            onChange: handleChange,
-          },
-        }}
-        sx={{
-          "& form > .MuiStack-root": {
-            marginTop: "2rem",
-            rowGap: "0.5rem",
-          },
-        }}
-      />
-    </AppProvider>
-
+    <>
+      <AppProvider>
+        <AlertComponent
+          display={display}
+          message={statusMessage}
+          severity={status}
+        />
+        <SignInPage
+          signIn={handleSubmit}
+          providers={providers(signup)}
+          slotProps={{
+            form: { noValidate: true },
+            submitButton: {
+              color: "primary",
+              variant: "contained",
+            },
+            emailField: {
+              name: "username",
+              value: formValues.username,
+              onChange: handleChange,
+            },
+            passwordField: {
+              name: "password",
+              value: formValues.password,
+              onChange: handleChange,
+            },
+          }}
+          sx={{
+            "& form > .MuiStack-root": {
+              marginTop: "2rem",
+              rowGap: "0.5rem",
+            },
+          }}
+        />
+      </AppProvider>
+    </>
     // preview-end
   );
 }
