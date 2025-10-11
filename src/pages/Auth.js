@@ -55,12 +55,10 @@ export default function AuthIn({ signup = false }) {
     const response = null;
 
     try {
-      const response = await fetch(url, {
+      const response = await axios({
+        url: url,
         method: "POST",
-        body: JSON.stringify(formValues),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        data: formValues,
       });
 
       if (!response.ok) {
@@ -72,7 +70,7 @@ export default function AuthIn({ signup = false }) {
       const result = await response.json();
       alert(result.message);
     } catch (error) {
-      alert(error.message, response);
+      alert(error.message);
     }
   }
 
