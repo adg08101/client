@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
+import axios from "axios";
 
 // import { createTheme } from "@mui/material/styles";
 // import { useColorSchemeShim } from "docs/src/modules/components/ThemeContext";
@@ -36,7 +37,7 @@ export default function AuthIn({ signup = false }) {
 
   const defaultState = () => {
     return {
-      email: "",
+      username: "",
       password: "",
     };
   };
@@ -49,9 +50,9 @@ export default function AuthIn({ signup = false }) {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  async function handleSubmit(event) {
-    // event.preventDefault();
-    const url = `http://${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_PORT}/register`;
+  async function handleSubmit() {
+    const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/register`;
+    const response = null;
 
     try {
       const response = await fetch(url, {
@@ -61,18 +62,19 @@ export default function AuthIn({ signup = false }) {
           "Content-Type": "application/json",
         },
       });
+
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        throw new Error(
+          `User registration failed with status: ${response.status}`
+        );
       }
 
       const result = await response.json();
-      console.log(result);
+      alert(result.message);
     } catch (error) {
-      console.error(error.message);
+      alert(error.message, response);
     }
   }
-
-  const [email, setEmail] = useState("");
 
   return (
     // preview-start
@@ -88,8 +90,8 @@ export default function AuthIn({ signup = false }) {
             variant: "contained",
           },
           emailField: {
-            name: "email",
-            value: formValues.email,
+            name: "username",
+            value: formValues.username,
             onChange: handleChange,
           },
           passwordField: {
