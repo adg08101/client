@@ -57,7 +57,9 @@ export default function AuthIn({ signup = false }) {
   };
 
   const handleRedirect = () => {
-    navigate("/signin"); // Redirects to '/new-path'
+    signup ? navigate("/signin") : navigate("/");
+
+    // Redirects to '/new-path'
     // navigate(-1); // Go back one step in history
     // navigate('/another-path', { replace: true }); // Replaces the current entry in history
   };
@@ -70,15 +72,21 @@ export default function AuthIn({ signup = false }) {
   }
 
   async function handleSubmit() {
-    const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/register`;
-    const response = null;
+    const registerUrl = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/register`;
+    const loginUrl = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/login`;
 
     try {
-      const response = await axios({
-        url: url,
-        method: "POST",
-        data: formValues,
-      });
+      const response = signup
+        ? await axios({
+            url: registerUrl,
+            method: "POST",
+            data: formValues,
+          })
+        : await axios({
+            url: loginUrl,
+            method: "POST",
+            data: formValues,
+          });
 
       setStatus("success");
       setStatusMessage(response.data.message);
