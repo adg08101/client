@@ -36,8 +36,8 @@ function App() {
             </>
           }
         />
-        <Route path="signin" element={<AuthIn signup={false} />} />
-        <Route path="signup" element={<AuthIn signup={true} />} />
+        <Route path="login" element={<AuthIn signup={false} />} />
+        <Route path="register" element={<AuthIn signup={true} />} />
       </Route>
     </Routes>
   );

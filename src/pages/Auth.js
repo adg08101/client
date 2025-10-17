@@ -57,7 +57,7 @@ export default function AuthIn({ signup = false }) {
   };
 
   const handleRedirect = () => {
-    signup ? navigate("/signin") : navigate("/");
+    signup ? navigate("/login") : navigate("/");
 
     // Redirects to '/new-path'
     // navigate(-1); // Go back one step in history
