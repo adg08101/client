@@ -23,11 +23,11 @@ export default function Header() {
           <Button href="/" color="inherit">
             Home
           </Button>
-          <Button href="/signin" color="inherit">
-            Sign In
+          <Button href="/login" color="inherit">
+            Login
           </Button>
-          <Button href="/signup" color="inherit">
-            Sign Up
+          <Button href="/register" color="inherit">
+            Register
           </Button>
         </Toolbar>
       </AppBar>

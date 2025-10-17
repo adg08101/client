@@ -15,6 +15,8 @@ export default function Layout() {
           url: profileUrl,
           method: "GET",
         });
+
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
