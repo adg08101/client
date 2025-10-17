@@ -81,11 +81,13 @@ export default function AuthIn({ signup = false }) {
             url: registerUrl,
             method: "POST",
             data: formValues,
+            withCredentials: true,
           })
         : await axios({
             url: loginUrl,
             method: "POST",
             data: formValues,
+            withCredentials: true,
           });
 
       setStatus("success");
@@ -98,7 +100,6 @@ export default function AuthIn({ signup = false }) {
         handleReset();
       }, 3000);
     } catch (error) {
-      console.log(error.message);
       setStatus("error");
       setStatusMessage(error.message);
       setDisplay("flex");
